@@ -9,8 +9,6 @@ from ui_main import Ui_MainWindow
 from image_editor import ImageEditor
 import utils
 
-# from PIL import Image, ImageQt
-
 
 def describe(obj):
     """ helper function that prints info about obj attributes """
@@ -44,18 +42,11 @@ class ImageOpener(object):
         fh = QtCore.QFile(filename)
         if not fh.open(QtCore.QFile.ReadOnly):
             raise IOError
-
-        # img = ImageQt.ImageQt(Image.open(filename))
-        # return img
-
         np_img = scipy.misc.imread(filename)
         return np_img
 
 
 class ImageSaver(object):
-
-    # TODO: decide, whether we need to take image from label and not from np_img
-
     def __init__(self, main_window, view):
         self.main_window = main_window
         self.view = view
@@ -81,7 +72,6 @@ class ImageSaver(object):
     def _save(self):
         pixmap = self.view.pixmap()
         img = pixmap.toImage()
-        # TODO: maybe make work with extensions prettier
         ext_mappings = {
             'jpeg': 'JPEG',
             'jpg': 'JPEG',
@@ -114,7 +104,6 @@ class MainWindow(QtGui.QMainWindow):
     def init_file_actions(self):
         self.ui.actionExit.triggered.connect(QtGui.qApp.quit)
         self.ui.actionOpen.triggered.connect(self.open_file)
-        # self.ui.actionOpen.triggered.connect(self.test_open)
         self.ui.actionSave.triggered.connect(self.save_file)
         self.ui.actionSave_As.triggered.connect(self.image_saver.save_as_file)
 
@@ -124,13 +113,17 @@ class MainWindow(QtGui.QMainWindow):
     def image_editor_wrapper(self, editor_func):
         self.image_editor.np_img = self.np_img
         new_pixmap = QtGui.QPixmap.fromImage(editor_func())
+
         # assume, that image shape ahsn't been changed
         self.view.setPixmap(new_pixmap)
 
     def open_file(self):
-        # img = self.image_opener.open_file()
-        # self.show_image(img)
         self.np_img = self.image_opener.open_file()
+
+        # in case of png files swap channels
+        if self.np_img.shape[2] == 4:
+            self.np_img = utils.bgra2rgba(self.np_img)
+
         self.show_np_image()
 
     def save_file(self):

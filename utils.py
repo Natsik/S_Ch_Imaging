@@ -1,8 +1,24 @@
 __author__ = 'aynroot'
 
 from PyQt4.QtGui import QImage, qRgb
-from PIL import Image
 import numpy as np
+
+
+#      ___800___
+#     |         |
+# 600 |         |
+#     |_________|
+#
+# len(np_img[0]) == 800
+# len(np_img[0][0]) == 4
+
+
+def bgra2rgba(np_img):
+    n, m, _ = np_img.shape
+    np_img.shape = (-1, 4)
+    np_img = np_img[:, [2, 1, 0, 3]]
+    np_img = np_img.reshape(n, m, 4)
+    return np_img.copy()
 
 
 def np_to_qimage(np_img, copy=False):
@@ -24,20 +40,7 @@ def np_to_qimage(np_img, copy=False):
             qimg = QImage(np_img.data, np_img.shape[1], np_img.shape[0], np_img.strides[0], QImage.Format_RGB888)
             return qimg.copy() if copy else qimg
         elif np_img.shape[2] == 4:
-            # raise NotImplementedError
             qimg = QImage(np_img.data, np_img.shape[1], np_img.shape[0], np_img.strides[0], QImage.Format_ARGB32)
             return qimg.copy() if copy else qimg
 
     raise NotImplementedError
-
-
-def PIL_to_np(img):
-    return np.array(img.getdata(), np.uint8).reshape(img.size[1], img.size[0], 3)
-
-
-def np_to_PIL(np_img, size):
-    mode = 'RGBA'
-    np_img = np_img.reshape(np_img.shape[0]*np_img.shape[1], np_img.shape[2])
-    if len(np_img[0]) == 3:
-        np_img = np.c_[np_img, 255 * np.ones((len(np_img), 1), np.uint8)]
-    return Image.frombuffer(mode, size, np_img.tostring(), 'raw', mode, 0, 1)
