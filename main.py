@@ -1,7 +1,7 @@
 __author__ = 'aynroot'
 
 import sys
-import scipy.ndimage
+import scipy.misc
 
 from PyQt4 import QtGui, QtCore
 from ui_main import Ui_MainWindow
@@ -47,10 +47,10 @@ class ImageOpener(object):
 
 
 class ImageSaver(object):
-    def __init__(self, main_window, view):
+    def __init__(self, main_window):
         self.main_window = main_window
-        self.view = view
         self.filename = None
+        self.np_img = None
 
     def save_as_file(self):
         filename, filter = QtGui.QFileDialog().getSaveFileNameAndFilter(self.main_window, 'Save File...', '.',
@@ -69,9 +69,7 @@ class ImageSaver(object):
             self.save_as_file()
 
     def _save(self):
-        pixmap = self.view.pixmap()
-        img = pixmap.toImage()
-
+        img = utils.np_to_qimage(self.np_img)
         img.save(self.filename, ext_mappings[self.filename.lower().split('.')[-1]])
 
 
@@ -84,7 +82,7 @@ class MainWindow(QtGui.QMainWindow):
 
         self.view = self.ui.imageLabel
         self.image_opener = ImageOpener(self)
-        self.image_saver = ImageSaver(self, self.ui.imageLabel)
+        self.image_saver = ImageSaver(self)
         self.image_editor = ImageEditor()
         self.init_file_actions()
         self.init_edit_actions()
@@ -106,10 +104,9 @@ class MainWindow(QtGui.QMainWindow):
 
     def image_editor_wrapper(self, editor_func):
         self.image_editor.np_img = self.np_img
-        new_pixmap = QtGui.QPixmap.fromImage(editor_func())
-
-        # assume, that image shape ahsn't been changed
-        self.view.setPixmap(new_pixmap)
+        pixmap = QtGui.QPixmap.fromImage(editor_func())
+        pixmap = self.scale_pixmap(pixmap)
+        self.view.setPixmap(pixmap)
 
     def open_file(self):
         self.np_img = self.image_opener.open_file()
@@ -121,6 +118,7 @@ class MainWindow(QtGui.QMainWindow):
         self.show_np_image()
 
     def save_file(self):
+        self.image_saver.np_img = self.np_img
         self.image_saver.save_file()
 
     def show_np_image(self):
@@ -129,12 +127,16 @@ class MainWindow(QtGui.QMainWindow):
 
     def show_image(self, img):
         pixmap = QtGui.QPixmap.fromImage(img)
+        pixmap = self.scale_pixmap(pixmap)
+        self.view.setPixmap(pixmap)
+
+    def scale_pixmap(self, pixmap):
         dest_height, dest_width = self.view.size().height(), self.view.size().width()
         if dest_height < pixmap.size().height():
             pixmap = pixmap.scaledToHeight(self.view.size().height())
         elif dest_width < pixmap.size().width():
             pixmap = pixmap.scaledToWidth(self.view.size().width())
-        self.view.setPixmap(pixmap)
+        return pixmap
 
     def show_window(self):
         self.show()            
