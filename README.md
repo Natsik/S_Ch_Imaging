@@ -9,8 +9,7 @@ S_Ch_Imaging
 
 Зависимости:
 
-- MS VS 2010 - ???
 - Python 2.7
 - PyQt44
 - numpy, scipy
-- ctypes ???
+- ctypes
