@@ -10,18 +10,18 @@ from image_editor import ImageEditor
 import utils
 
 
-def describe(obj):
-    """ helper function that prints info about obj attributes """
-    for key in dir(obj):
-        try:
-            val = getattr(obj, key)
-        except AttributeError:
-            continue
-        if callable(val):
-            help(val)
-        else:
-            print('{k} => {v}'.format(k=key, v=val))
-        print('-' * 80)
+ext_mappings = {
+    'jpeg': 'JPEG',
+    'jpg': 'JPEG',
+    'bmp': 'BMP',
+    'png': 'PNG'
+}
+
+filter_mappings = {
+    'JPEG': 'jpg',
+    'BMP': 'bmp',
+    'PNG': 'png'
+}
 
 
 class ImageOpener(object):
@@ -53,12 +53,11 @@ class ImageSaver(object):
         self.filename = None
 
     def save_as_file(self):
-        filename = str(QtGui.QFileDialog().getSaveFileName(self.main_window, 'Save File...', '.',
-                                                           'JPEG (*jpeg *jpg);; BMP(*bmp);; PNG(*png)'))
-
+        filename, filter = QtGui.QFileDialog().getSaveFileNameAndFilter(self.main_window, 'Save File...', '.',
+                                                                        'JPEG (*jpeg *jpg);; BMP (*bmp);; PNG (*png)')
+        extension = filter_mappings[str(filter).split()[0]]
+        filename = '.'.join((str(filename), extension))
         if filename:
-            if not filename.lower().endswith(('.jpg', '.jpeg', '.bmp', '.png')):
-                filename += '.jpg'
             self.filename = filename
             self._save()
 
@@ -72,12 +71,7 @@ class ImageSaver(object):
     def _save(self):
         pixmap = self.view.pixmap()
         img = pixmap.toImage()
-        ext_mappings = {
-            'jpeg': 'JPEG',
-            'jpg': 'JPEG',
-            'bmp': 'BMP',
-            'png': 'PNG'
-        }
+
         img.save(self.filename, ext_mappings[self.filename.lower().split('.')[-1]])
 
 
