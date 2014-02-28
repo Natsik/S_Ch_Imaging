@@ -58,9 +58,11 @@
    </widget>
    <widget class="QMenu" name="menuFilters">
     <property name="title">
-     <string>Edit</string>
+     <string>M1</string>
     </property>
-    <addaction name="actionGrayscale"/>
+    <addaction name="actionErosion"/>
+    <addaction name="actionDilatation"/>
+    <addaction name="actionInversion"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilters"/>
@@ -107,12 +109,22 @@
     <string>F1</string>
    </property>
   </action>
-  <action name="actionGrayscale">
+  <action name="actionErosion">
    <property name="text">
-    <string>Grayscale</string>
+    <string>Erosion</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionDilatation">
+   <property name="text">
+    <string>Dilatation</string>
+   </property>
+  </action>
+  <action name="actionInversion">
+   <property name="text">
+    <string>Inversion</string>
    </property>
   </action>
  </widget>

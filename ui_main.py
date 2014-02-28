@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Feb 23 16:10:06 2014
+# Created: Sat Mar 01 00:48:56 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,15 +63,21 @@ class Ui_MainWindow(object):
         self.actionSave_As.setObjectName(_fromUtf8("actionSave_As"))
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
-        self.actionGrayscale = QtGui.QAction(MainWindow)
-        self.actionGrayscale.setObjectName(_fromUtf8("actionGrayscale"))
+        self.actionErosion = QtGui.QAction(MainWindow)
+        self.actionErosion.setObjectName(_fromUtf8("actionErosion"))
+        self.actionDilatation = QtGui.QAction(MainWindow)
+        self.actionDilatation.setObjectName(_fromUtf8("actionDilatation"))
+        self.actionInversion = QtGui.QAction(MainWindow)
+        self.actionInversion.setObjectName(_fromUtf8("actionInversion"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addAction(self.actionAbout)
-        self.menuFilters.addAction(self.actionGrayscale)
+        self.menuFilters.addAction(self.actionErosion)
+        self.menuFilters.addAction(self.actionDilatation)
+        self.menuFilters.addAction(self.actionInversion)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFilters.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -83,7 +89,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Image Viewer", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
-        self.menuFilters.setTitle(_translate("MainWindow", "Edit", None))
+        self.menuFilters.setTitle(_translate("MainWindow", "M1", None))
         self.actionOpen.setText(_translate("MainWindow", "Open...", None))
         self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
@@ -94,6 +100,8 @@ class Ui_MainWindow(object):
         self.actionSave_As.setShortcut(_translate("MainWindow", "Ctrl+Shift+S", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
         self.actionAbout.setShortcut(_translate("MainWindow", "F1", None))
-        self.actionGrayscale.setText(_translate("MainWindow", "Grayscale", None))
-        self.actionGrayscale.setShortcut(_translate("MainWindow", "Ctrl+G", None))
+        self.actionErosion.setText(_translate("MainWindow", "Erosion", None))
+        self.actionErosion.setShortcut(_translate("MainWindow", "Ctrl+G", None))
+        self.actionDilatation.setText(_translate("MainWindow", "Dilatation", None))
+        self.actionInversion.setText(_translate("MainWindow", "Inversion", None))
 

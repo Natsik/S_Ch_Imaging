@@ -20,7 +20,6 @@ def bgra2rgba(np_img):
     np_img = np_img.reshape(n, m, 4)
     return np_img.copy()
 
-
 def np_to_qimage(np_img, copy=False):
     gray_color_table = [qRgb(i, i, i) for i in range(256)]
     if np_img is None:
@@ -44,3 +43,25 @@ def np_to_qimage(np_img, copy=False):
             return qimg.copy() if copy else qimg
 
     raise NotImplementedError
+
+
+class CConverter(object):
+    ''' converts 2D rgba array (python) to 1D rgb array (C) and vise-versa '''
+
+    def __init__(self, np_img, c_func):
+        self.c_func = c_func
+        self.np_img = np_img
+        self.c_img = None
+
+    def to_c_format(self):
+        raise NotImplementedError
+
+    def from_c_format(self):
+        raise NotImplementedError
+
+    def run(self):
+        self.c_img = self.c_func()
+        self.np_img = self.from_c_format()
+        return self.np_img
+
+

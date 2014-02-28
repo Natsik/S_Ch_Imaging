@@ -1,8 +1,5 @@
 __author__ = 'aynroot'
 
-import scipy.misc
-import utils
-
 
 class ImageEditor(object):
 
@@ -12,6 +9,13 @@ class ImageEditor(object):
     def update_image(self, np_img):
         self.np_img = np_img
 
-    def grayscale(self):
-        np_img = scipy.misc.imread('lena.jpg')
-        return utils.np_to_qimage(np_img)
+
+    # TODO: call c functions here
+    def erosion(self):
+        raise NotImplementedError
+
+    def dilatation(self):
+        raise NotImplementedError
+
+    def inversion(self):
+        raise NotImplementedError

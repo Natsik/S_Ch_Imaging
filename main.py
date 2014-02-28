@@ -85,7 +85,7 @@ class MainWindow(QtGui.QMainWindow):
         self.image_saver = ImageSaver(self)
         self.image_editor = ImageEditor()
         self.init_file_actions()
-        self.init_edit_actions()
+        self.init_M1_actions()
 
     def init_ui(self):
         self.ui = Ui_MainWindow()
@@ -99,12 +99,16 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionSave.triggered.connect(self.save_file)
         self.ui.actionSave_As.triggered.connect(self.image_saver.save_as_file)
 
-    def init_edit_actions(self):
-        self.ui.actionGrayscale.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.grayscale))
+    def init_M1_actions(self):
+        self.ui.actionErosion.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.erosion))
+        self.ui.actionDilatation.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.dilatation))
+        self.ui.actionInversion.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.inversion))
 
     def image_editor_wrapper(self, editor_func):
-        self.image_editor.np_img = self.np_img
-        pixmap = QtGui.QPixmap.fromImage(editor_func())
+        formatter = utils.CConverter(self.np_img, editor_func)
+        self.np_img = formatter.run()
+        img = utils.np_to_qimage(self.np_img)
+        pixmap = QtGui.QPixmap.fromImage(img)
         pixmap = self.scale_pixmap(pixmap)
         self.view.setPixmap(pixmap)
 
