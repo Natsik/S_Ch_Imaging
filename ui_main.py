@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sat Mar 01 00:48:56 2014
+# Created: Sat Mar 01 20:19:45 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -69,12 +69,15 @@ class Ui_MainWindow(object):
         self.actionDilatation.setObjectName(_fromUtf8("actionDilatation"))
         self.actionInversion = QtGui.QAction(MainWindow)
         self.actionInversion.setObjectName(_fromUtf8("actionInversion"))
+        self.actionTest = QtGui.QAction(MainWindow)
+        self.actionTest.setObjectName(_fromUtf8("actionTest"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addAction(self.actionAbout)
+        self.menuFilters.addAction(self.actionTest)
         self.menuFilters.addAction(self.actionErosion)
         self.menuFilters.addAction(self.actionDilatation)
         self.menuFilters.addAction(self.actionInversion)
@@ -101,7 +104,11 @@ class Ui_MainWindow(object):
         self.actionAbout.setText(_translate("MainWindow", "About", None))
         self.actionAbout.setShortcut(_translate("MainWindow", "F1", None))
         self.actionErosion.setText(_translate("MainWindow", "Erosion", None))
-        self.actionErosion.setShortcut(_translate("MainWindow", "Ctrl+G", None))
+        self.actionErosion.setShortcut(_translate("MainWindow", "Ctrl+E", None))
         self.actionDilatation.setText(_translate("MainWindow", "Dilatation", None))
+        self.actionDilatation.setShortcut(_translate("MainWindow", "Ctrl+D", None))
         self.actionInversion.setText(_translate("MainWindow", "Inversion", None))
+        self.actionInversion.setShortcut(_translate("MainWindow", "Ctrl+I", None))
+        self.actionTest.setText(_translate("MainWindow", "test", None))
+        self.actionTest.setShortcut(_translate("MainWindow", "Ctrl+T", None))
 

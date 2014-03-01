@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void c_inversion(const unsigned char * src, unsigned char * dst, int w, int h)
 {
   const unsigned char MAX_CHANNEL_VALUE = -1;

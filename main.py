@@ -26,6 +26,7 @@ filter_mappings = {
 
 class ImageOpener(object):
 
+    # TODO: cancel open dialog protection
     def __init__(self, main_window):
         self.main_window = main_window
 
@@ -100,13 +101,15 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionSave_As.triggered.connect(self.image_saver.save_as_file)
 
     def init_M1_actions(self):
+        # TODO: make menu section disabled until image is opened
         self.ui.actionErosion.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.erosion))
         self.ui.actionDilatation.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.dilatation))
         self.ui.actionInversion.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.inversion))
+        self.ui.actionTest.triggered.connect(lambda: self.image_editor_wrapper(self.image_editor.test))
 
     def image_editor_wrapper(self, editor_func):
-        formatter = utils.CConverter(self.np_img, editor_func)
-        self.np_img = formatter.run()
+        self.image_editor.update_image(self.np_img)
+        self.np_img = editor_func()
         img = utils.np_to_qimage(self.np_img)
         pixmap = QtGui.QPixmap.fromImage(img)
         pixmap = self.scale_pixmap(pixmap)

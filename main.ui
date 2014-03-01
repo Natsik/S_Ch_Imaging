@@ -60,6 +60,7 @@
     <property name="title">
      <string>M1</string>
     </property>
+    <addaction name="actionTest"/>
     <addaction name="actionErosion"/>
     <addaction name="actionDilatation"/>
     <addaction name="actionInversion"/>
@@ -114,17 +115,31 @@
     <string>Erosion</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+G</string>
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionDilatation">
    <property name="text">
     <string>Dilatation</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
   </action>
   <action name="actionInversion">
    <property name="text">
     <string>Inversion</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>test</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>
