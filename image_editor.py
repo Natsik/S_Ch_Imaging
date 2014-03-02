@@ -56,5 +56,5 @@ class ImageEditor(object):
     @c_call
     def inversion(self):
         new_c_img = self.c_img.copy()
-        MS2.c_inversion_func(self.c_img, new_c_img, self.np_shape[1], self.np_shape[0])
+        MS2.c_inversion_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0])
         self.c_img = new_c_img
