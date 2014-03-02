@@ -1,13 +1,13 @@
 #include <stdio.h>
 
-void c_inversion(const unsigned char * src, unsigned char * dst, int w, int h)
+void c_inversion(const unsigned char * src, unsigned char * dst, int channelStride, int h)
 {
   const unsigned char MAX_CHANNEL_VALUE = -1;
 
   unsigned char * srcIterator = (unsigned char *)src;
   unsigned char * dstIterator = (unsigned char *)dst;
 
-  long pixelCount = w * h;
+  long pixelCount = channelStride * h;
 
   const unsigned char * SRC_ITERATOR_END = srcIterator + pixelCount;
 
@@ -21,7 +21,6 @@ void c_inversion(const unsigned char * src, unsigned char * dst, int w, int h)
 /*Takes RGB packed images (3byte per pixel)*/
 void c_dilatation(const unsigned char * src, unsigned char * dst, int channelStride, int h)
 {
-  const unsigned char MAX_CHANNEL_VALUE = -1;
   const long CHANNEL_COUNT = 3;
 
   unsigned char * srcIterator = (unsigned char *)src;
@@ -37,7 +36,7 @@ void c_dilatation(const unsigned char * src, unsigned char * dst, int channelStr
   {
     long offside = (srcIterator - src) % (channelStride);
 
-    if (offside <=2 || offside >= (channelStride - 3) || (srcIterator - src) < channelStride || (SRC_ITERATOR_END - srcIterator) < channelStride)//If we on border nothing to do
+    if (offside < CHANNEL_COUNT || offside >= (channelStride - CHANNEL_COUNT) || (srcIterator - src) < channelStride || (SRC_ITERATOR_END - srcIterator) < channelStride)//If we on border nothing to do
     {
       *dstIterator = *srcIterator;
       continue;
@@ -75,7 +74,7 @@ void c_errosion(const unsigned char * src, unsigned char * dst, int channelStrid
   {
     long offside = (srcIterator - src) % (channelStride);
 
-    if (offside <=2 || offside >= (channelStride - 3) || (srcIterator - src) < channelStride || (SRC_ITERATOR_END - srcIterator) < channelStride)//If we on border nothing to do
+    if (offside < CHANNEL_COUNT || offside >= (channelStride - CHANNEL_COUNT) || (srcIterator - src) < channelStride || (SRC_ITERATOR_END - srcIterator) < channelStride)//If we on border nothing to do
     {
       *dstIterator = *srcIterator;
       continue;
