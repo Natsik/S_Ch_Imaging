@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "invdilerr.h"
 
 void c_inversion(const unsigned char * src, unsigned char * dst, int channelStride, int h)
 {
