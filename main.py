@@ -37,7 +37,7 @@ class MainWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.ui.imageLabel)
 
     def _init_file_actions(self):
-        # TODO: undo / redo enable/disable funcs
+        # TODO: undo/redo enable/disable funcs
         self.ui.actionExit.triggered.connect(QtGui.qApp.quit)
         self.ui.actionOpen.triggered.connect(self._open_file)
         self.ui.actionSave.triggered.connect(self._save_file)
@@ -65,10 +65,7 @@ class MainWindow(QtGui.QMainWindow):
     def _image_editor_wrapper(self, editor_func):
         self.image_editor.update_image(self.np_img)
         self.np_img = editor_func()
-        img = utils.np_to_qimage(self.np_img)
-        pixmap = QtGui.QPixmap.fromImage(img)
-        pixmap = self.scale_pixmap(pixmap)
-        self.view.setPixmap(pixmap)
+        self._show_np_image()
         self._enable_menu_items(True)
 
     def _open_file(self):
