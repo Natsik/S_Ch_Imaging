@@ -9,6 +9,7 @@ from make_new_custom_linear_filter_dialog import MakeNewCustomLinearFilterDialog
 from image_open_close import ImageOpener, ImageSaver
 from image_editor import ImageEditor
 from history import History
+from user_filters_dump_n_loader import UserFiltersDumpNLoader
 import utils
 
 
@@ -25,6 +26,7 @@ class MainWindow(QtGui.QMainWindow):
         self.image_saver = ImageSaver(self)
         self.image_editor = ImageEditor()
         self.image_history = History()
+        self.user_filters_dump_n_loader = UserFiltersDumpNLoader()
 
         self._init_file_actions()
         self._init_M2_actions()
@@ -65,6 +67,12 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionSharpen.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
                                                 ImageEditor.sharpen_matrix, ImageEditor.sharpen_divisor))
         self.ui.actionMake_new_custom_filter.triggered.connect(self._make_new_custom_filter)
+        for filter_name, (matrix, divisor) in self.user_filters_dump_n_loader.user_filters.iteritems():
+            action = QtGui.QAction(self)
+            action.setText(filter_name)
+            action.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
+                                     matrix, divisor))
+            self.ui.menuCustom_filters.addAction(action)
         self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur, self.ui.actionSharpen, self.ui.actionMake_new_custom_filter])
 
     def _enable_menu_items(self, mode):
@@ -80,10 +88,16 @@ class MainWindow(QtGui.QMainWindow):
         self._enable_menu_items(True)
 
     def _make_new_custom_filter(self):
-        s = MakeNewCustomLinearFilterDialog()
-        if s.exec_():
-            matrix, divisor, name = s.get_values()
+        dialog = MakeNewCustomLinearFilterDialog(self.user_filters_dump_n_loader.user_filters.keys())
+        if dialog.exec_():
+            matrix, divisor, name = dialog.get_values()
             self._image_editor_wrapper(self.image_editor.linear_filter, matrix, divisor)
+            self.user_filters_dump_n_loader.save_filter(matrix, divisor, name)
+            action = QtGui.QAction(self)
+            action.setText(name)
+            self.ui.menuCustom_filters.addAction(action)
+            action.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
+                                     matrix, divisor))
 
 
     def _open_file(self):

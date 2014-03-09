@@ -27,7 +27,7 @@ class MatrixWidget(object):
 
 class Ui_Dialog(object):
 
-    def setupUi(self, Dialog):
+    def setupUi(self, Dialog, new_name):
         Dialog.resize(380, 220)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(260, 20, 91, 61))
@@ -45,7 +45,7 @@ class Ui_Dialog(object):
         self.nameLabel = QtGui.QLabel(self.layoutWidget)
         self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.nameLabel)
         self.nameEdit = QtGui.QLineEdit(self.layoutWidget)
-        self.nameEdit.setText("New Filter")
+        self.nameEdit.setText(new_name)
         self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.nameEdit)
         self.dimensionLabel = QtGui.QLabel(self.layoutWidget)
         self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.dimensionLabel)
