@@ -47,6 +47,7 @@ class MainWindow(QtGui.QMainWindow):
 
         self.image_actions.append(self.ui.actionSave)
         self.ui.actionSave_As.setEnabled(False)
+        self._enable_undo_redo()
 
     def _init_M2_actions(self):
         self.ui.actionErosion.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.erosion))
@@ -66,10 +67,14 @@ class MainWindow(QtGui.QMainWindow):
         self.image_editor.update_image(self.np_img)
         self.np_img = editor_func()
         self._show_np_image()
+        self.image_history.add_new_state(self.np_img)
+        self._enable_undo_redo()
         self._enable_menu_items(True)
 
     def _open_file(self):
         self.np_img = self.image_opener.open_file()
+        self.image_history.reset()
+        self.image_history.add_new_state(self.np_img)
         self.image_saver.filename = self.image_opener.filename
 
         # in case of png files swap channels
@@ -78,6 +83,7 @@ class MainWindow(QtGui.QMainWindow):
         self._show_np_image()
 
         self._enable_menu_items(True)
+        self._enable_undo_redo()
         self.ui.actionSave_As.setEnabled(True)
 
     def _save_file(self):
@@ -88,16 +94,23 @@ class MainWindow(QtGui.QMainWindow):
     def _undo(self):
         if self.image_history.can_undo():
             self.np_img = self.image_history.undo()
-        if not self.image_history.can_undo():
-            self.ui.actionUndo.setEnabled(False)
-            self.ui.actionRedo.setEnabled(True)
+            self._show_np_image()
+            self._enable_undo_redo()
 
     def _redo(self):
         if self.image_history.can_redo():
             self.np_img = self.image_history.redo()
+            self._show_np_image()
+            self._enable_undo_redo()
+
+    def _enable_undo_redo(self):
+        undo_state, redo_state = True, True
         if not self.image_history.can_redo():
-            self.ui.actionUndo.setEnabled(True)
-            self.ui.actionRedo.setEnabled(False)
+            redo_state = False
+        if not self.image_history.can_undo():
+            undo_state = False
+        self.ui.actionRedo.setEnabled(redo_state)
+        self.ui.actionUndo.setEnabled(undo_state)
 
     def _show_np_image(self):
         img = utils.np_to_qimage(self.np_img)

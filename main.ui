@@ -48,7 +48,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionUndo"/>
-    <addaction name="actionRedo_3"/>
+    <addaction name="actionRedo"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -224,16 +224,6 @@
    </property>
   </action>
   <action name="actionRedo">
-   <property name="text">
-    <string>redo</string>
-   </property>
-  </action>
-  <action name="actionRedo_2">
-   <property name="text">
-    <string>Redo</string>
-   </property>
-  </action>
-  <action name="actionRedo_3">
    <property name="text">
     <string>Redo</string>
    </property>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Mar 09 13:47:26 2014
+# Created: Sun Mar 09 14:28:50 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -101,15 +101,11 @@ class Ui_MainWindow(object):
         self.actionUndo.setObjectName(_fromUtf8("actionUndo"))
         self.actionRedo = QtGui.QAction(MainWindow)
         self.actionRedo.setObjectName(_fromUtf8("actionRedo"))
-        self.actionRedo_2 = QtGui.QAction(MainWindow)
-        self.actionRedo_2.setObjectName(_fromUtf8("actionRedo_2"))
-        self.actionRedo_3 = QtGui.QAction(MainWindow)
-        self.actionRedo_3.setObjectName(_fromUtf8("actionRedo_3"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
         self.menuFile.addAction(self.actionUndo)
-        self.menuFile.addAction(self.actionRedo_3)
+        self.menuFile.addAction(self.actionRedo)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addAction(self.actionAbout)
@@ -168,8 +164,6 @@ class Ui_MainWindow(object):
         self.actionSharpen.setText(_translate("MainWindow", "Sharpen", None))
         self.actionUndo.setText(_translate("MainWindow", "Undo", None))
         self.actionUndo.setShortcut(_translate("MainWindow", "Ctrl+Z", None))
-        self.actionRedo.setText(_translate("MainWindow", "redo", None))
-        self.actionRedo_2.setText(_translate("MainWindow", "Redo", None))
-        self.actionRedo_3.setText(_translate("MainWindow", "Redo", None))
-        self.actionRedo_3.setShortcut(_translate("MainWindow", "Ctrl+Shift+Z", None))
+        self.actionRedo.setText(_translate("MainWindow", "Redo", None))
+        self.actionRedo.setShortcut(_translate("MainWindow", "Ctrl+Shift+Z", None))
 
