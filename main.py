@@ -4,6 +4,7 @@ import sys
 
 from PyQt4 import QtGui, QtCore
 from ui_main import Ui_MainWindow
+from make_new_custom_linear_filter_dialog import MakeNewCustomLinearFilterDialog
 
 from image_open_close import ImageOpener, ImageSaver
 from image_editor import ImageEditor
@@ -37,7 +38,6 @@ class MainWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.ui.imageLabel)
 
     def _init_file_actions(self):
-        # TODO: undo/redo enable/disable funcs
         self.ui.actionExit.triggered.connect(QtGui.qApp.quit)
         self.ui.actionOpen.triggered.connect(self._open_file)
         self.ui.actionSave.triggered.connect(self._save_file)
@@ -64,7 +64,8 @@ class MainWindow(QtGui.QMainWindow):
                                              ImageEditor.blur_matrix, ImageEditor.blur_divisor))
         self.ui.actionSharpen.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
                                                 ImageEditor.sharpen_matrix, ImageEditor.sharpen_divisor))
-        self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur, self.ui.actionSharpen])
+        self.ui.actionMake_new_custom_filter.triggered.connect(self._make_new_custom_filter)
+        self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur, self.ui.actionSharpen, self.ui.actionMake_new_custom_filter])
 
     def _enable_menu_items(self, mode):
         for action in self.image_actions:
@@ -77,6 +78,13 @@ class MainWindow(QtGui.QMainWindow):
         self.image_history.add_new_state(self.np_img)
         self._enable_undo_redo()
         self._enable_menu_items(True)
+
+    def _make_new_custom_filter(self):
+        s = MakeNewCustomLinearFilterDialog()
+        if s.exec_():
+            matrix, divisor, name = s.get_values()
+            self._image_editor_wrapper(self.image_editor.linear_filter, matrix, divisor)
+
 
     def _open_file(self):
         self.np_img = self.image_opener.open_file()
