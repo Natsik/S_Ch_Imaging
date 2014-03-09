@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sat Mar 01 20:19:45 2014
+# Created: Wed Mar 05 00:03:57 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -77,7 +77,6 @@ class Ui_MainWindow(object):
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addAction(self.actionAbout)
-        self.menuFilters.addAction(self.actionTest)
         self.menuFilters.addAction(self.actionErosion)
         self.menuFilters.addAction(self.actionDilatation)
         self.menuFilters.addAction(self.actionInversion)
