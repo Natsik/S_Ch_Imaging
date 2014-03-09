@@ -56,16 +56,23 @@ class MainWindow(QtGui.QMainWindow):
         self.image_actions.extend([self.ui.actionErosion, self.ui.actionDilatation, self.ui.actionInversion])
 
     def _init_M3_actions(self):
-        # TODO: write triggers
-        self.image_actions.extend([])
+        self.ui.actionIntegrating_filter.triggered.connect(
+            lambda: self._image_editor_wrapper(self.image_editor.linear_filter, ImageEditor.integration_filter_matrix,
+                                               ImageEditor.integration_filter_divisor)
+        )
+        self.ui.actionBlur.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
+                                             ImageEditor.blur_matrix, ImageEditor.blur_divisor))
+        self.ui.actionSharpen.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
+                                                ImageEditor.sharpen_matrix, ImageEditor.sharpen_divisor))
+        self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur, self.ui.actionSharpen])
 
     def _enable_menu_items(self, mode):
         for action in self.image_actions:
             action.setEnabled(mode)
 
-    def _image_editor_wrapper(self, editor_func):
+    def _image_editor_wrapper(self, editor_func, *args):
         self.image_editor.update_image(self.np_img)
-        self.np_img = editor_func()
+        self.np_img = editor_func(*args)
         self._show_np_image()
         self.image_history.add_new_state(self.np_img)
         self._enable_undo_redo()

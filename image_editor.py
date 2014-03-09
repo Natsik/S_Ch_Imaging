@@ -2,18 +2,27 @@ __author__ = 'aynroot'
 
 import numpy as np
 from ms2_c_func import MS2
+from mswam_c_func import MSWAM
 
 
 def c_call(function):
-    def c_call_wrapper(self):
+    def c_call_wrapper(self, *args):
         self.c_img = self.to_c_format()
-        function(self)
+        function(self, *args)
         self.np_img = self.from_c_format()
         return self.np_img
     return c_call_wrapper
 
 
 class ImageEditor(object):
+
+    integration_filter_matrix = np.matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+    blur_matrix = np.matrix([[0, 1, 0], [1, 1, 1], [0, 1, 0]])
+    sharpen_matrix = np.matrix([[0, -3, 0], [-3, 21, -3], [0, -3, 0]])
+
+    integration_filter_divisor = 9
+    blur_divisor = 5
+    sharpen_divisor = 9
 
     def __init__(self):
         self.np_img = None
@@ -46,10 +55,6 @@ class ImageEditor(object):
         return self.np_img
 
     @c_call
-    def test(self):
-        return self.c_img
-
-    @c_call
     def erosion(self):
         new_c_img = self.c_img.copy()
         MS2.c_errosion_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0])
@@ -65,4 +70,11 @@ class ImageEditor(object):
     def inversion(self):
         new_c_img = self.c_img.copy()
         MS2.c_inversion_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0])
+        self.c_img = new_c_img
+
+    @c_call
+    def linear_filter(self, matrix, divisor):
+        new_c_img = self.c_img.copy()
+        MSWAM.c_linear_filtre_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0],
+                                   np.array(matrix).flatten(), matrix.shape[0], divisor)
         self.c_img = new_c_img
