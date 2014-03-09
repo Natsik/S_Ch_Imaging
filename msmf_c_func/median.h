@@ -1,0 +1,1 @@
+void c_median_filtre(const unsigned char * src, unsigned char * dst, int channelStride, int h, int matrix_radius);
