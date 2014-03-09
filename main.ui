@@ -47,6 +47,8 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo_3"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -58,14 +60,31 @@
    </widget>
    <widget class="QMenu" name="menuFilters">
     <property name="title">
-     <string>M1</string>
+     <string>M2</string>
     </property>
     <addaction name="actionErosion"/>
     <addaction name="actionDilatation"/>
     <addaction name="actionInversion"/>
    </widget>
+   <widget class="QMenu" name="menuM3">
+    <property name="title">
+     <string>M3</string>
+    </property>
+    <widget class="QMenu" name="menuCustom_filters">
+     <property name="title">
+      <string>Custom filters</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionMake_new_custom_filter"/>
+    </widget>
+    <addaction name="menuCustom_filters"/>
+    <addaction name="actionIntegrating_filter"/>
+    <addaction name="actionBlur"/>
+    <addaction name="actionSharpen"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilters"/>
+   <addaction name="menuM3"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -139,6 +158,87 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionAny_standard_filter">
+   <property name="text">
+    <string>Any standard filter</string>
+   </property>
+  </action>
+  <action name="actionMake_new_custom_filter">
+   <property name="text">
+    <string>Make new custom filter...</string>
+   </property>
+  </action>
+  <action name="actionLinear_filter">
+   <property name="text">
+    <string>Linear filter</string>
+   </property>
+  </action>
+  <action name="actionNoize_filter">
+   <property name="text">
+    <string>Noize filter</string>
+   </property>
+  </action>
+  <action name="actionWhite_noize">
+   <property name="text">
+    <string>White noize</string>
+   </property>
+  </action>
+  <action name="actionMedian_filter">
+   <property name="text">
+    <string>Median filter</string>
+   </property>
+  </action>
+  <action name="actionGauss_filter">
+   <property name="text">
+    <string>Gauss filter</string>
+   </property>
+  </action>
+  <action name="actionLow_pass_filter">
+   <property name="text">
+    <string>Low-pass filter</string>
+   </property>
+  </action>
+  <action name="actionIntegrating_filter">
+   <property name="text">
+    <string>Integrating filter</string>
+   </property>
+  </action>
+  <action name="actionBlur">
+   <property name="text">
+    <string>Blur</string>
+   </property>
+  </action>
+  <action name="actionSharpen">
+   <property name="text">
+    <string>Sharpen</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>redo</string>
+   </property>
+  </action>
+  <action name="actionRedo_2">
+   <property name="text">
+    <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionRedo_3">
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
  </widget>
