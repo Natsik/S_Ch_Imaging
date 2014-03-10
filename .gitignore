@@ -1,2 +1,5 @@
 *.pyc
 .idea
+msmf_c_func/build/temp.win32-2.7/Release/MSMED.def
+*.o
+*.def
