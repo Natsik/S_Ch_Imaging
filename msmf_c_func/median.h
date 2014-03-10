@@ -1,1 +1,1 @@
-void c_median_filtre(const unsigned char * src, unsigned char * dst, int channelStride, int h, int matrix_radius);
+void c_median_filter(const unsigned char * src, unsigned char * dst, int channelStride, int h, int matrix_radius);

@@ -20,7 +20,7 @@ void sort(unsigned char * arr, int length)
     }
 }
 
-void c_median_filtre(const unsigned char * src, unsigned char * dst, int channelStride, int h, int matrix_radius)
+void c_median_filter(const unsigned char * src, unsigned char * dst, int channelStride, int h, int matrix_radius)
 {
   const unsigned char MAX_CHANNEL_VALUE = -1;
 

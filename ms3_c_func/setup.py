@@ -6,7 +6,7 @@ from Cython.Distutils import build_ext
 
 setup(
     cmdclass={'build_ext': build_ext},
-    ext_modules=[Extension("MSWAM",
-                           sources=["_filtrenoise.pyx", "filtrenoise.c"],
+    ext_modules=[Extension("MS3",
+                           sources=["_filternoise.pyx", "filternoise.c"],
                            include_dirs=[numpy.get_include()])],
 )

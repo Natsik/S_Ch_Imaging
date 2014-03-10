@@ -1,8 +1,11 @@
 #define CHANNEL_COUNT 3
 #define MAX_MEDIAN_RADIUS 7
 
-/*linear filtre*/
-void c_linear_filtre(const unsigned char * src, unsigned char * dst, int channelStride, int h, int * matrix, int matrix_dimension, int delimeter)
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+/*linear filter*/
+void c_linear_filter(const unsigned char * src, unsigned char * dst, int channelStride, int h, int * matrix, int matrix_dimension, int divisor)
 {
   const unsigned char MAX_CHANNEL_VALUE = -1;
 
@@ -35,10 +38,9 @@ void c_linear_filtre(const unsigned char * src, unsigned char * dst, int channel
         accumulator += (*(srcIterator + i * channelStride + j * CHANNEL_COUNT)) * (*(matrix_start++));
       }
 
-    *dstIterator = accumulator / delimeter;
+    *dstIterator = MIN(MAX((accumulator / divisor), 0), MAX_CHANNEL_VALUE);  
   }
 }
-
 
 /*noize white/black*/
 void c_white_noise(const unsigned char * src, unsigned char * dst, int channelStride, int h, int p, int d)

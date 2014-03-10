@@ -2,7 +2,7 @@ __author__ = 'aynroot'
 
 import numpy as np
 from ms2_c_func import MS2
-from mswam_c_func import MSWAM
+from ms3_c_func import MS3
 
 
 def c_call(function):
@@ -75,6 +75,6 @@ class ImageEditor(object):
     @c_call
     def linear_filter(self, matrix, divisor):
         new_c_img = self.c_img.copy()
-        MSWAM.c_linear_filtre_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0],
+        MS3.c_linear_filter_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0],
                                    np.array(matrix).flatten(), matrix.shape[0], divisor)
         self.c_img = new_c_img
