@@ -80,10 +80,10 @@ class MainWindow(QtGui.QMainWindow):
             action.setEnabled(mode)
 
     def _image_editor_wrapper(self, editor_func, *args):
+        self.image_history.add_new_state(self.np_img)
         self.image_editor.update_image(self.np_img)
         self.np_img = editor_func(*args)
         self._show_np_image()
-        self.image_history.add_new_state(self.np_img)
         self._enable_undo_redo()
         self._enable_menu_items(True)
 

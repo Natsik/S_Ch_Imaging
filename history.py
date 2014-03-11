@@ -7,29 +7,29 @@ class History(object):
     Allows revert or repeat image changes.
     """
 
-    # TODO: decide what to do when branching (probably remove all future states and change them)
-
     def __init__(self):
-        self.states = []
-        self.current_state = -1
+        self.states_for_undo = []
+        self.states_for_redo = []
 
     def add_new_state(self, np_img):
-        self.states.append(np_img)
-        self.current_state += 1
+        self.states_for_undo.append(np_img)
+        self.states_for_redo = []
 
     def undo(self):
-        self.current_state -= 1
-        return self.states[self.current_state]
+        state = self.states_for_undo.pop()
+        self.states_for_redo.append(state)
+        return state
 
     def redo(self):
-        self.current_state += 1
-        return self.states[self.current_state]
+        state = self.states_for_redo.pop()
+        self.states_for_undo.append(state)
+        return state
 
     def can_redo(self):
-        return self.current_state < len(self.states) - 1
+        return True if self.states_for_redo else False
 
     def can_undo(self):
-        return self.current_state > 0
+        return True if len(self.states_for_undo) > 1 else False
 
     def reset(self):
         self.__init__()
