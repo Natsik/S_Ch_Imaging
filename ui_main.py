@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Mar 16 21:41:02 2014
+# Created: Sun Mar 16 22:13:56 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -55,6 +55,8 @@ class Ui_MainWindow(object):
         self.menuCustom_filters.setObjectName(_fromUtf8("menuCustom_filters"))
         self.menuM4 = QtGui.QMenu(self.menubar)
         self.menuM4.setObjectName(_fromUtf8("menuM4"))
+        self.menuM5 = QtGui.QMenu(self.menubar)
+        self.menuM5.setObjectName(_fromUtf8("menuM5"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -109,6 +111,12 @@ class Ui_MainWindow(object):
         self.actionDust.setObjectName(_fromUtf8("actionDust"))
         self.actionGrid = QtGui.QAction(MainWindow)
         self.actionGrid.setObjectName(_fromUtf8("actionGrid"))
+        self.actionDifference = QtGui.QAction(MainWindow)
+        self.actionDifference.setObjectName(_fromUtf8("actionDifference"))
+        self.actionSet_golden_images_path = QtGui.QAction(MainWindow)
+        self.actionSet_golden_images_path.setObjectName(_fromUtf8("actionSet_golden_images_path"))
+        self.actionSet_diff_images_path = QtGui.QAction(MainWindow)
+        self.actionSet_diff_images_path.setObjectName(_fromUtf8("actionSet_diff_images_path"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
@@ -129,10 +137,15 @@ class Ui_MainWindow(object):
         self.menuM4.addAction(self.actionWhite_noise)
         self.menuM4.addAction(self.actionDust)
         self.menuM4.addAction(self.actionGrid)
+        self.menuM5.addAction(self.actionDifference)
+        self.menuM5.addSeparator()
+        self.menuM5.addAction(self.actionSet_golden_images_path)
+        self.menuM5.addAction(self.actionSet_diff_images_path)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFilters.menuAction())
         self.menubar.addAction(self.menuM3.menuAction())
         self.menubar.addAction(self.menuM4.menuAction())
+        self.menubar.addAction(self.menuM5.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -146,6 +159,7 @@ class Ui_MainWindow(object):
         self.menuM3.setTitle(_translate("MainWindow", "M3", None))
         self.menuCustom_filters.setTitle(_translate("MainWindow", "Custom filters", None))
         self.menuM4.setTitle(_translate("MainWindow", "M4", None))
+        self.menuM5.setTitle(_translate("MainWindow", "M5", None))
         self.actionOpen.setText(_translate("MainWindow", "Open...", None))
         self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
@@ -182,4 +196,8 @@ class Ui_MainWindow(object):
         self.actionWhite_noise.setText(_translate("MainWindow", "White noise...", None))
         self.actionDust.setText(_translate("MainWindow", "Dust...", None))
         self.actionGrid.setText(_translate("MainWindow", "Grid...", None))
+        self.actionDifference.setText(_translate("MainWindow", "Difference", None))
+        self.actionDifference.setShortcut(_translate("MainWindow", "Ctrl+D", None))
+        self.actionSet_golden_images_path.setText(_translate("MainWindow", "Set golden images path", None))
+        self.actionSet_diff_images_path.setText(_translate("MainWindow", "Set diff images path", None))
 

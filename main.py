@@ -1,6 +1,7 @@
 __author__ = 'aynroot'
 
 import sys
+import operator
 
 from PyQt4 import QtGui, QtCore
 from ui_main import Ui_MainWindow
@@ -28,11 +29,15 @@ class MainWindow(QtGui.QMainWindow):
         self.image_editor = ImageEditor()
         self.image_history = History()
         self.user_filters_dump_n_loader = UserFiltersDumpNLoader()
+        #TODO: save/load dirnames from user settings
+        self.golden_images_dir = 'golden_images'
+        self.diff_images_dir = 'diff_images'
 
         self._init_file_actions()
         self._init_M2_actions()
         self._init_M3_actions()
         self._init_M4_actions()
+        self._init_M5_actions()
         self._enable_menu_items(False)
 
     def _init_ui(self):
@@ -75,13 +80,25 @@ class MainWindow(QtGui.QMainWindow):
             action.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
                                      matrix, divisor))
             self.ui.menuCustom_filters.addAction(action)
-        self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur, self.ui.actionSharpen, self.ui.actionMake_new_custom_filter])
+        self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur,
+                                   self.ui.actionSharpen, self.ui.actionMake_new_custom_filter])
 
     def _init_M4_actions(self):
-        self.ui.actionWhite_noise.triggered.connect(lambda: self._get_two_params_and_edit("Probability (%)", "Range", self.image_editor.white_noise))
-        self.ui.actionDust.triggered.connect(lambda: self._get_two_params_and_edit("Probability (%)", "Min value", self.image_editor.dust))
-        self.ui.actionGrid.triggered.connect(lambda: self._get_two_params_and_edit("Width", "Height", self.image_editor.grid))
+        self.ui.actionWhite_noise.triggered.connect(lambda: self._get_two_params_and_edit("Probability (%)", "Range",
+                                                                                          self.image_editor.white_noise))
+        self.ui.actionDust.triggered.connect(lambda: self._get_two_params_and_edit("Probability (%)", "Min value",
+                                                                                   self.image_editor.dust))
+        self.ui.actionGrid.triggered.connect(lambda: self._get_two_params_and_edit("Width", "Height",
+                                                                                   self.image_editor.grid))
         self.image_actions.extend([self.ui.actionWhite_noise, self.ui.actionDust, self.ui.actionGrid])
+
+    def _init_M5_actions(self):
+        # TODO: diff action
+        # self.ui.actionDifference.triggered.connect()
+        self.ui.actionSet_diff_images_path.triggered.connect(lambda: self._set_diff_images_dir(self._choose_directory()))
+        self.ui.actionSet_golden_images_path.triggered.connect(lambda: self._set_golden_images_dir(self._choose_directory()))
+        self.image_actions.extend([self.ui.actionDifference,
+                                   self.ui.actionSet_diff_images_path, self.ui.actionSet_golden_images_path])
 
     def _enable_menu_items(self, mode):
         for action in self.image_actions:
@@ -113,7 +130,17 @@ class MainWindow(QtGui.QMainWindow):
             param1_value, param2_value = dialog.get_values()
             self._image_editor_wrapper(editor_func, param1_value, param2_value)
 
+    @staticmethod
+    def _choose_directory():
+        return QtGui.QFileDialog.getExistingDirectory(None, 'Choose directory', '.', QtGui.QFileDialog.ShowDirsOnly)
 
+    def _set_golden_images_dir(self, dirname):
+        if dirname:
+            self.golden_images_dir = dirname
+
+    def _set_diff_images_dir(self, dirname):
+        if dirname:
+            self.golden_images_dir = dirname
 
     def _open_file(self):
         self.np_img = self.image_opener.open_file()
