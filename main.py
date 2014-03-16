@@ -5,6 +5,7 @@ import sys
 from PyQt4 import QtGui, QtCore
 from ui_main import Ui_MainWindow
 from make_new_custom_linear_filter_dialog import MakeNewCustomLinearFilterDialog
+from base_two_params_dialog import BaseTwoParamsDialog
 
 from image_open_close import ImageOpener, ImageSaver
 from image_editor import ImageEditor
@@ -31,6 +32,7 @@ class MainWindow(QtGui.QMainWindow):
         self._init_file_actions()
         self._init_M2_actions()
         self._init_M3_actions()
+        self._init_M4_actions()
         self._enable_menu_items(False)
 
     def _init_ui(self):
@@ -75,6 +77,12 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.menuCustom_filters.addAction(action)
         self.image_actions.extend([self.ui.actionIntegrating_filter, self.ui.actionBlur, self.ui.actionSharpen, self.ui.actionMake_new_custom_filter])
 
+    def _init_M4_actions(self):
+        self.ui.actionWhite_noise.triggered.connect(lambda: self._get_two_params_and_edit("Probability (%)", "Range", self.image_editor.white_noise))
+        self.ui.actionDust.triggered.connect(lambda: self._get_two_params_and_edit("Probability (%)", "Min value", self.image_editor.dust))
+        self.ui.actionGrid.triggered.connect(lambda: self._get_two_params_and_edit("Width", "Height", self.image_editor.grid))
+        self.image_actions.extend([self.ui.actionWhite_noise, self.ui.actionDust, self.ui.actionGrid])
+
     def _enable_menu_items(self, mode):
         for action in self.image_actions:
             action.setEnabled(mode)
@@ -98,6 +106,13 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.menuCustom_filters.addAction(action)
             action.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
                                      matrix, divisor))
+
+    def _get_two_params_and_edit(self, param1, param2, editor_func):
+        dialog = BaseTwoParamsDialog(param1, param2)
+        if dialog.exec_():
+            param1_value, param2_value = dialog.get_values()
+            self._image_editor_wrapper(editor_func, param1_value, param2_value)
+
 
 
     def _open_file(self):

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Mon Mar 10 12:38:18 2014
+# Created: Sun Mar 16 21:41:02 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -53,6 +53,8 @@ class Ui_MainWindow(object):
         self.menuM3.setObjectName(_fromUtf8("menuM3"))
         self.menuCustom_filters = QtGui.QMenu(self.menuM3)
         self.menuCustom_filters.setObjectName(_fromUtf8("menuCustom_filters"))
+        self.menuM4 = QtGui.QMenu(self.menubar)
+        self.menuM4.setObjectName(_fromUtf8("menuM4"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -101,6 +103,12 @@ class Ui_MainWindow(object):
         self.actionUndo.setObjectName(_fromUtf8("actionUndo"))
         self.actionRedo = QtGui.QAction(MainWindow)
         self.actionRedo.setObjectName(_fromUtf8("actionRedo"))
+        self.actionWhite_noise = QtGui.QAction(MainWindow)
+        self.actionWhite_noise.setObjectName(_fromUtf8("actionWhite_noise"))
+        self.actionDust = QtGui.QAction(MainWindow)
+        self.actionDust.setObjectName(_fromUtf8("actionDust"))
+        self.actionGrid = QtGui.QAction(MainWindow)
+        self.actionGrid.setObjectName(_fromUtf8("actionGrid"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
@@ -118,9 +126,13 @@ class Ui_MainWindow(object):
         self.menuM3.addAction(self.actionIntegrating_filter)
         self.menuM3.addAction(self.actionBlur)
         self.menuM3.addAction(self.actionSharpen)
+        self.menuM4.addAction(self.actionWhite_noise)
+        self.menuM4.addAction(self.actionDust)
+        self.menuM4.addAction(self.actionGrid)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFilters.menuAction())
         self.menubar.addAction(self.menuM3.menuAction())
+        self.menubar.addAction(self.menuM4.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -133,6 +145,7 @@ class Ui_MainWindow(object):
         self.menuFilters.setTitle(_translate("MainWindow", "M2", None))
         self.menuM3.setTitle(_translate("MainWindow", "M3", None))
         self.menuCustom_filters.setTitle(_translate("MainWindow", "Custom filters", None))
+        self.menuM4.setTitle(_translate("MainWindow", "M4", None))
         self.actionOpen.setText(_translate("MainWindow", "Open...", None))
         self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
@@ -166,4 +179,7 @@ class Ui_MainWindow(object):
         self.actionUndo.setShortcut(_translate("MainWindow", "Ctrl+Z", None))
         self.actionRedo.setText(_translate("MainWindow", "Redo", None))
         self.actionRedo.setShortcut(_translate("MainWindow", "Ctrl+Shift+Z", None))
+        self.actionWhite_noise.setText(_translate("MainWindow", "White noise...", None))
+        self.actionDust.setText(_translate("MainWindow", "Dust...", None))
+        self.actionGrid.setText(_translate("MainWindow", "Grid...", None))
 

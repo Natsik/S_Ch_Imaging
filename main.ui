@@ -82,9 +82,18 @@
     <addaction name="actionBlur"/>
     <addaction name="actionSharpen"/>
    </widget>
+   <widget class="QMenu" name="menuM4">
+    <property name="title">
+     <string>M4</string>
+    </property>
+    <addaction name="actionWhite_noise"/>
+    <addaction name="actionDust"/>
+    <addaction name="actionGrid"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilters"/>
    <addaction name="menuM3"/>
+   <addaction name="menuM4"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -229,6 +238,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionWhite_noise">
+   <property name="text">
+    <string>White noise...</string>
+   </property>
+  </action>
+  <action name="actionDust">
+   <property name="text">
+    <string>Dust...</string>
+   </property>
+  </action>
+  <action name="actionGrid">
+   <property name="text">
+    <string>Grid...</string>
    </property>
   </action>
  </widget>
