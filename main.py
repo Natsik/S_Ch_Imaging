@@ -1,9 +1,11 @@
 __author__ = 'aynroot'
 
+import os
 import sys
-import operator
 
 from PyQt4 import QtGui, QtCore
+import scipy.misc
+
 from ui_main import Ui_MainWindow
 from make_new_custom_linear_filter_dialog import MakeNewCustomLinearFilterDialog
 from base_two_params_dialog import BaseTwoParamsDialog
@@ -11,7 +13,7 @@ from base_two_params_dialog import BaseTwoParamsDialog
 from image_open_close import ImageOpener, ImageSaver
 from image_editor import ImageEditor
 from history import History
-from user_filters_dump_n_loader import UserFiltersDumpNLoader
+from user_filters_dump_n_loader import UserSettingsDumpNLoader
 import utils
 
 
@@ -28,10 +30,9 @@ class MainWindow(QtGui.QMainWindow):
         self.image_saver = ImageSaver(self)
         self.image_editor = ImageEditor()
         self.image_history = History()
-        self.user_filters_dump_n_loader = UserFiltersDumpNLoader()
-        #TODO: save/load dirnames from user settings
-        self.golden_images_dir = 'golden_images'
-        self.diff_images_dir = 'diff_images'
+        self.user_settings_dump_n_loader = UserSettingsDumpNLoader()
+        self.diff_images_dir = self.user_settings_dump_n_loader.get_diff_images_dir()
+        self.golden_images_dir = self.user_settings_dump_n_loader.get_golden_images_dir()
 
         self._init_file_actions()
         self._init_M2_actions()
@@ -74,7 +75,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionSharpen.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
                                                 ImageEditor.sharpen_matrix, ImageEditor.sharpen_divisor))
         self.ui.actionMake_new_custom_filter.triggered.connect(self._make_new_custom_filter)
-        for filter_name, (matrix, divisor) in self.user_filters_dump_n_loader.user_filters.iteritems():
+        for filter_name, (matrix, divisor) in self.user_settings_dump_n_loader.get_filters().iteritems():
             action = QtGui.QAction(self)
             action.setText(filter_name)
             action.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.linear_filter,
@@ -93,8 +94,7 @@ class MainWindow(QtGui.QMainWindow):
         self.image_actions.extend([self.ui.actionWhite_noise, self.ui.actionDust, self.ui.actionGrid])
 
     def _init_M5_actions(self):
-        # TODO: diff action
-        # self.ui.actionDifference.triggered.connect()
+        self.ui.actionDifference.triggered.connect(lambda: self._diff_images())
         self.ui.actionSet_diff_images_path.triggered.connect(lambda: self._set_diff_images_dir(self._choose_directory()))
         self.ui.actionSet_golden_images_path.triggered.connect(lambda: self._set_golden_images_dir(self._choose_directory()))
         self.image_actions.extend([self.ui.actionDifference,
@@ -113,11 +113,11 @@ class MainWindow(QtGui.QMainWindow):
         self._enable_menu_items(True)
 
     def _make_new_custom_filter(self):
-        dialog = MakeNewCustomLinearFilterDialog(self.user_filters_dump_n_loader.user_filters.keys())
+        dialog = MakeNewCustomLinearFilterDialog(self.user_settings_dump_n_loader.get_filters().keys())
         if dialog.exec_():
             matrix, divisor, name = dialog.get_values()
             self._image_editor_wrapper(self.image_editor.linear_filter, matrix, divisor)
-            self.user_filters_dump_n_loader.save_filter(matrix, divisor, name)
+            self.user_settings_dump_n_loader.save_filter(matrix, divisor, name)
             action = QtGui.QAction(self)
             action.setText(name)
             self.ui.menuCustom_filters.addAction(action)
@@ -137,10 +137,23 @@ class MainWindow(QtGui.QMainWindow):
     def _set_golden_images_dir(self, dirname):
         if dirname:
             self.golden_images_dir = dirname
+            self.user_settings_dump_n_loader.set_golden_images_dir(dirname)
 
     def _set_diff_images_dir(self, dirname):
         if dirname:
             self.golden_images_dir = dirname
+            self.user_settings_dump_n_loader.set_diff_images_dir(dirname)
+
+    def _diff_images(self):
+        self.image_editor.update_image(self.np_img)
+        golden_np_img = scipy.misc.imread(os.path.join(self.golden_images_dir, self.image_saver.filename))
+        is_ok, diff_img = self.image_editor.diff_images(golden_np_img)
+        if not is_ok:
+            # TODO: different error msgs (no file / sizes are different / types are different)
+            QtGui.QMessageBox.about(self, 'Error', 'Images have different sizes')
+        else:
+            #TODO: save diff img
+            pass
 
     def _open_file(self):
         self.np_img = self.image_opener.open_file()

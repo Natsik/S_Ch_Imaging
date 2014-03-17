@@ -98,7 +98,16 @@ class ImageEditor(object):
         MS3.c_mesh_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0], int(grid_w), int(grid_h), 225)
         self.c_img = new_c_img
 
-    @c_call
-    def diff_images(self):
-        pass
+    def diff_images(self, golden_np_img):
+        try:
+            if self.np_img.shape != golden_np_img.shape:
+                return False, None
+            # TODO: add png support
+            c_img1 = self.to_c_format()
+            c_img2 = golden_np_img.flatten()
+            MS3.c_diff_images_func(c_img1, c_img2, self.np_shape[1] * 3, self.np_shape[0])
+            # TODO: save diff img
+            return True, self.np_img
+        except:
+            return False, None
 
