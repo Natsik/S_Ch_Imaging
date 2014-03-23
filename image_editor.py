@@ -89,7 +89,7 @@ class ImageEditor(object):
     @c_call
     def dust(self, p, min_value):
         new_c_img = self.c_img.copy()
-        MS3.c_bil_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0], int(p), int(min_value))
+        MS3.c_fog_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0], int(p), int(min_value))
         self.c_img = new_c_img
 
     @c_call
