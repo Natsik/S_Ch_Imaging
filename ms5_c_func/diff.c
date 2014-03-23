@@ -2,7 +2,7 @@
 #define MAX_MEDIAN_RADIUS 7
 
 #define ABS(a) ((a) > 0 ? (a) : -(a))
-double c_diff_images(const unsigned char * src1, const unsigned char * src2, int channelStride, int h, unsigned char * diff)
+double c_diff_images(const unsigned char * src1, const unsigned char * src2, unsigned char * diff, int channelStride, int h)
 {
   const unsigned char MAX_CHANNEL_VALUE = -1;
 

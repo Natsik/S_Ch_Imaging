@@ -132,7 +132,7 @@ class MainWindow(QtGui.QMainWindow):
 
     @staticmethod
     def _choose_directory():
-        return QtGui.QFileDialog.getExistingDirectory(None, 'Choose directory', '.', QtGui.QFileDialog.ShowDirsOnly)
+        return str(QtGui.QFileDialog.getExistingDirectory(None, 'Choose directory', '.', QtGui.QFileDialog.ShowDirsOnly))
 
     def _set_golden_images_dir(self, dirname):
         if dirname:
@@ -146,14 +146,19 @@ class MainWindow(QtGui.QMainWindow):
 
     def _diff_images(self):
         self.image_editor.update_image(self.np_img)
-        golden_np_img = scipy.misc.imread(os.path.join(self.golden_images_dir, self.image_saver.filename))
-        is_ok, diff_img = self.image_editor.diff_images(golden_np_img)
-        if not is_ok:
-            # TODO: different error msgs (no file / sizes are different / types are different)
-            QtGui.QMessageBox.about(self, 'Error', 'Images have different sizes')
-        else:
-            #TODO: save diff img
-            pass
+        basename = os.path.basename(str(self.image_saver.filename))
+        try:
+            golden_np_img = scipy.misc.imread(os.path.join(str(self.golden_images_dir), basename))
+            is_ok, diff_img, percentage = self.image_editor.diff_images(golden_np_img)
+            if not is_ok:
+                QtGui.QMessageBox.about(self, 'Error', 'Images have different size.s')
+            else:
+                QtGui.QMessageBox.about(self, 'Diff percentage', 'diff: %.1f %%' % percentage)
+                diff_filename = os.path.join(str(self.diff_images_dir), basename)
+                if percentage:
+                    self.image_saver.save_any(diff_img, diff_filename)
+        except IOError:
+            QtGui.QMessageBox.about(self, 'Error', 'There is no golden image with corresponding name.')
 
     def _open_file(self):
         self.np_img = self.image_opener.open_file()
