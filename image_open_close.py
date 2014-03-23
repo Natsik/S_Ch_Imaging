@@ -2,6 +2,7 @@ __author__ = 'aynroot'
 
 import scipy.misc
 from PyQt4 import QtGui, QtCore
+import utils
 
 ext_mappings = {
     'jpeg': 'JPEG',
@@ -64,3 +65,8 @@ class ImageSaver(object):
     def _save(self):
         img = utils.np_to_qimage(self.main_window.np_img)
         img.save(self.filename, ext_mappings[self.filename.lower().split('.')[-1]])
+
+    @staticmethod
+    def save_any(np_img, filename):
+        img = utils.np_to_qimage(np_img)
+        img.save(filename, ext_mappings[filename.lower().split('.')[-1]])
