@@ -1,6 +1,7 @@
 #define CHANNEL_COUNT 3
 #define MAX_MEDIAN_RADIUS 7
 
+#define ABS(a) ((a) > 0 ? (a) : -(a))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
@@ -72,7 +73,7 @@ void c_white_noise(const unsigned char * src, unsigned char * dst, int channelSt
   }
 }
 
-void c_bil(const unsigned char * src, unsigned char * dst, int channelStride, int h, int p, int min)
+void c_fog(const unsigned char * src, unsigned char * dst, int channelStride, int h, int p, int min)
 {
   const unsigned char MAX_CHANNEL_VALUE = -1;
 
@@ -145,25 +146,4 @@ void c_mesh(const unsigned char * src, unsigned char * dst, int channelStride, i
       *(dstIterator + 2) = *(srcIterator + 2);
     }
   }
-}
-
-double c_diff_images(const unsigned char * src1, unsigned char * src2, int channelStride, int h)
-{
-  const unsigned char MAX_CHANNEL_VALUE = -1;
-
-  unsigned char * srcIterator1 = (unsigned char *)src1;
-  unsigned char * srcIterator2 = (unsigned char *)src2;
-
-  long pixelCount = channelStride * h;
-
-  long long result = 0;
-
-  const unsigned char * SRC_ITERATOR_END = srcIterator1 + pixelCount;
-
-  for (;srcIterator1 != SRC_ITERATOR_END; ++srcIterator1, ++srcIterator2)
-  {
-    result += (*srcIterator1 - *srcIterator2);
-  }
-
-  return (double)result / (double)(pixelCount * MAX_CHANNEL_VALUE);
 }

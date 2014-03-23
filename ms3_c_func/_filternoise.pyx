@@ -6,7 +6,7 @@ np.import_array()
 cdef extern from "filternoise.h":
     void c_linear_filter(const unsigned char * src, unsigned char * dst, int channelStride, int h, int * matrix, int matrix_dimension, int divisor)
     void c_white_noise(const unsigned char * src, unsigned char * dst, int channelStride, int h, int p, int d)
-    void c_bil(const unsigned char * src, unsigned char * dst, int channelStride, int h, int p, int min)
+    void c_fog(const unsigned char * src, unsigned char * dst, int channelStride, int h, int p, int min)
     void c_mesh(const unsigned char * src, unsigned char * dst, int channelStride, int h, int mesh_w, int mesh_h, unsigned char tone)
 
 def c_linear_filter_func(np.ndarray[char, ndim=1, mode="c"] in_array not None,
@@ -27,10 +27,10 @@ def c_white_noise_func(np.ndarray[char, ndim=1, mode="c"] in_array not None,
                  <unsigned char*> np.PyArray_DATA(out_array),
                  channel_strides, h, p, d)
 
-def c_bil_func(np.ndarray[char, ndim=1, mode="c"] in_array not None,
+def c_fog_func(np.ndarray[char, ndim=1, mode="c"] in_array not None,
                np.ndarray[char, ndim=1, mode="c"] out_array not None,
                channel_strides, h, p, min):
-    c_bil(<unsigned char*> np.PyArray_DATA(in_array),
+    c_fog(<unsigned char*> np.PyArray_DATA(in_array),
           <unsigned char*> np.PyArray_DATA(out_array),
           channel_strides, h, p, min)
 
