@@ -20,6 +20,7 @@ def bgra2rgba(np_img):
     np_img = np_img.reshape(n, m, 4)
     return np_img.copy()
 
+
 def np_to_qimage(np_img, copy=False):
     gray_color_table = [qRgb(i, i, i) for i in range(256)]
     if np_img is None:
@@ -44,5 +45,36 @@ def np_to_qimage(np_img, copy=False):
 
     raise NotImplementedError
 
+
+class NumpyCImageConverter(object):
+    def __init__(self):
+        self.np_img = None
+        self.c_img = None
+        self.stored_alpha_channel = None
+        self.np_shape = None
+
+    def update_image(self, np_img):
+        self.np_img = np_img
+        self.np_shape = self.np_img.shape
+
+    def to_c_format(self):
+        if self.np_shape[2] == 3:
+            self.c_img = self.np_img.flatten()
+        elif self.np_shape[2] == 4:
+            r, g, b, a = np.rollaxis(self.np_img, axis=-1)
+            self.np_img = np.dstack([r, g, b])
+            self.c_img = self.np_img.flatten()
+            self.stored_alpha_channel = a
+        return self.c_img
+
+    def from_c_format(self):
+        if self.np_shape[2] == 3:
+            self.np_img = self.c_img.reshape(self.np_shape)
+        elif self.np_shape[2] == 4:
+            shape = (self.np_shape[0], self.np_shape[1], 3)
+            self.np_img = self.c_img.reshape(shape)
+            r, g, b = np.rollaxis(self.np_img, axis=-1)
+            self.np_img = np.dstack([r, g, b, self.stored_alpha_channel])
+        return self.np_img
 
 

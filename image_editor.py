@@ -5,6 +5,7 @@ import traceback
 from ms2_c_func import MS2
 from ms3_c_func import MS3
 from ms5_c_func import MS5
+from utils import NumpyCImageConverter
 
 
 def c_call(function):
@@ -104,12 +105,16 @@ class ImageEditor(object):
         try:
             if self.np_img.shape != golden_np_img.shape:
                 return False, None, None
-            # TODO: add png support
+
+            converter = NumpyCImageConverter()
+            converter.update_image(golden_np_img)
+
             c_img1 = self.to_c_format()
-            c_img2 = golden_np_img.flatten()
+            c_img2 = converter.to_c_format()
             c_diff_img = np.zeros_like(c_img1)
             percentage = MS5.c_diff_images_func(c_img1, c_img2, c_diff_img, self.np_shape[1] * 3, self.np_shape[0]) * 100
-            return True, c_diff_img.reshape(self.np_shape), percentage
+            converter.c_img = c_diff_img
+            return True, converter.from_c_format(), percentage
         except:
             traceback.print_exc()
             return False, None, None
