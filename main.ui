@@ -99,11 +99,20 @@
     <addaction name="actionSet_golden_images_path"/>
     <addaction name="actionSet_diff_images_path"/>
    </widget>
+   <widget class="QMenu" name="menuM6">
+    <property name="title">
+     <string>M6</string>
+    </property>
+    <addaction name="actionMedian_filter_r_1"/>
+    <addaction name="actionMedian_filter_r_2"/>
+    <addaction name="actionMedian_filter_r_3"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFilters"/>
    <addaction name="menuM3"/>
    <addaction name="menuM4"/>
    <addaction name="menuM5"/>
+   <addaction name="menuM6"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -269,9 +278,6 @@
    <property name="text">
     <string>Difference</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
-   </property>
   </action>
   <action name="actionSet_golden_images_path">
    <property name="text">
@@ -281,6 +287,21 @@
   <action name="actionSet_diff_images_path">
    <property name="text">
     <string>Set diff images path</string>
+   </property>
+  </action>
+  <action name="actionMedian_filter_r_1">
+   <property name="text">
+    <string>Median filter, r = 1</string>
+   </property>
+  </action>
+  <action name="actionMedian_filter_r_2">
+   <property name="text">
+    <string>Median filter, r = 2</string>
+   </property>
+  </action>
+  <action name="actionMedian_filter_r_3">
+   <property name="text">
+    <string>Median filter, r = 3</string>
    </property>
   </action>
  </widget>

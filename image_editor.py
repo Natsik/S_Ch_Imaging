@@ -5,6 +5,7 @@ import traceback
 from ms2_c_func import MS2
 from ms3_c_func import MS3
 from ms5_c_func import MS5
+from msmf_c_func import MSMED
 from utils import NumpyCImageConverter
 
 
@@ -99,6 +100,12 @@ class ImageEditor(object):
     def grid(self, grid_w, grid_h):
         new_c_img = self.c_img.copy()
         MS3.c_mesh_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0], int(grid_w), int(grid_h), 225)
+        self.c_img = new_c_img
+
+    @c_call
+    def median_filter(self, r):
+        new_c_img = self.c_img.copy()
+        MSMED.c_median_filter_func(self.c_img, new_c_img, self.np_shape[1] * 3, self.np_shape[0], r)
         self.c_img = new_c_img
 
     def diff_images(self, golden_np_img):

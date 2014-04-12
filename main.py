@@ -39,6 +39,7 @@ class MainWindow(QtGui.QMainWindow):
         self._init_M3_actions()
         self._init_M4_actions()
         self._init_M5_actions()
+        self._init_M6_actions()
         self._enable_menu_items(False)
 
     def _init_ui(self):
@@ -99,6 +100,13 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionSet_golden_images_path.triggered.connect(lambda: self._set_golden_images_dir(self._choose_directory()))
         self.image_actions.extend([self.ui.actionDifference,
                                    self.ui.actionSet_diff_images_path, self.ui.actionSet_golden_images_path])
+
+    def _init_M6_actions(self):
+        self.ui.actionMedian_filter_r_1.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.median_filter, 1))
+        self.ui.actionMedian_filter_r_2.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.median_filter, 2))
+        self.ui.actionMedian_filter_r_3.triggered.connect(lambda: self._image_editor_wrapper(self.image_editor.median_filter, 3))
+        self.image_actions.extend([self.ui.actionMedian_filter_r_1, self.ui.actionMedian_filter_r_2,
+                                   self.ui.actionMedian_filter_r_3])
 
     def _enable_menu_items(self, mode):
         for action in self.image_actions:

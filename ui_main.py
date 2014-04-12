@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Mar 16 22:13:56 2014
+# Created: Sat Apr 12 11:28:25 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -57,6 +57,8 @@ class Ui_MainWindow(object):
         self.menuM4.setObjectName(_fromUtf8("menuM4"))
         self.menuM5 = QtGui.QMenu(self.menubar)
         self.menuM5.setObjectName(_fromUtf8("menuM5"))
+        self.menuM6 = QtGui.QMenu(self.menubar)
+        self.menuM6.setObjectName(_fromUtf8("menuM6"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -117,6 +119,12 @@ class Ui_MainWindow(object):
         self.actionSet_golden_images_path.setObjectName(_fromUtf8("actionSet_golden_images_path"))
         self.actionSet_diff_images_path = QtGui.QAction(MainWindow)
         self.actionSet_diff_images_path.setObjectName(_fromUtf8("actionSet_diff_images_path"))
+        self.actionMedian_filter_r_1 = QtGui.QAction(MainWindow)
+        self.actionMedian_filter_r_1.setObjectName(_fromUtf8("actionMedian_filter_r_1"))
+        self.actionMedian_filter_r_2 = QtGui.QAction(MainWindow)
+        self.actionMedian_filter_r_2.setObjectName(_fromUtf8("actionMedian_filter_r_2"))
+        self.actionMedian_filter_r_3 = QtGui.QAction(MainWindow)
+        self.actionMedian_filter_r_3.setObjectName(_fromUtf8("actionMedian_filter_r_3"))
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
@@ -141,11 +149,15 @@ class Ui_MainWindow(object):
         self.menuM5.addSeparator()
         self.menuM5.addAction(self.actionSet_golden_images_path)
         self.menuM5.addAction(self.actionSet_diff_images_path)
+        self.menuM6.addAction(self.actionMedian_filter_r_1)
+        self.menuM6.addAction(self.actionMedian_filter_r_2)
+        self.menuM6.addAction(self.actionMedian_filter_r_3)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFilters.menuAction())
         self.menubar.addAction(self.menuM3.menuAction())
         self.menubar.addAction(self.menuM4.menuAction())
         self.menubar.addAction(self.menuM5.menuAction())
+        self.menubar.addAction(self.menuM6.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -160,6 +172,7 @@ class Ui_MainWindow(object):
         self.menuCustom_filters.setTitle(_translate("MainWindow", "Custom filters", None))
         self.menuM4.setTitle(_translate("MainWindow", "M4", None))
         self.menuM5.setTitle(_translate("MainWindow", "M5", None))
+        self.menuM6.setTitle(_translate("MainWindow", "M6", None))
         self.actionOpen.setText(_translate("MainWindow", "Open...", None))
         self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
@@ -197,7 +210,9 @@ class Ui_MainWindow(object):
         self.actionDust.setText(_translate("MainWindow", "Dust...", None))
         self.actionGrid.setText(_translate("MainWindow", "Grid...", None))
         self.actionDifference.setText(_translate("MainWindow", "Difference", None))
-        self.actionDifference.setShortcut(_translate("MainWindow", "Ctrl+D", None))
         self.actionSet_golden_images_path.setText(_translate("MainWindow", "Set golden images path", None))
         self.actionSet_diff_images_path.setText(_translate("MainWindow", "Set diff images path", None))
+        self.actionMedian_filter_r_1.setText(_translate("MainWindow", "Median filter, r = 1", None))
+        self.actionMedian_filter_r_2.setText(_translate("MainWindow", "Median filter, r = 2", None))
+        self.actionMedian_filter_r_3.setText(_translate("MainWindow", "Median filter, r = 3", None))
 
